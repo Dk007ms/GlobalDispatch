@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Card from "./Card";
+import MyContext from "./MyContext";
 
 export default function Container() {
+  const { searchValue, setSearchValue } = useContext(MyContext);
+  const { selectedCountry, setSelectedCountry } = useContext(MyContext);
   const [loading, setLoading] = useState(true);
   const [newsData, setNewsData] = useState([]);
+  console.log(searchValue, selectedCountry);
 
   const options = {
     method: "POST",
     url: "https://newsnow.p.rapidapi.com/",
     headers: {
       "content-type": "application/json",
-      "X-RapidAPI-Key": "5328498bb2msh1ac2d920339bf1ep10b4c8jsn4ef973c5a23b",
+      "X-RapidAPI-Key": "6d12c9a9a0msh6148d240117b72dp19750cjsn96fec8211a5d",
       "X-RapidAPI-Host": "newsnow.p.rapidapi.com",
     },
     data: {
-      text: "Elon Musk",
-      region: "world",
+      text: searchValue,
+      region: "India",
       max_results: 120,
     },
   };
@@ -24,13 +28,10 @@ export default function Container() {
   async function getNews() {
     try {
       const response = await axios.request(options);
-      console.log(response);
       const output = response.data.news;
       console.log(output);
       setNewsData(output);
-      console.log(newsData);
     } catch (error) {
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -38,14 +39,16 @@ export default function Container() {
 
   useEffect(() => {
     getNews();
-  }, []); // Empty dependency array means this effect will run only once, similar to componentDidMount
+  }, []);
 
   return (
-    <div className="w-screen h-max relative mx-auto bg-yellow-100 sm:p-8 p-2 pt-8 gap-6 flex flex-wrap">
+    <div className="w-screen h-max relative mx-auto bg-yellow-100 min-h-screen sm:p-8 p-2 pt-8 gap-6 flex flex-wrap">
       {loading ? (
         <p>Loading...</p>
-      ) : (
+      ) : newsData && newsData.length > 0 ? (
         newsData.map((news, index) => <Card key={index} news={news} />)
+      ) : (
+        <p>No news available</p>
       )}
     </div>
   );
