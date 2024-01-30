@@ -9,14 +9,27 @@ import CountryDropdown from "./components/CountryDropdown";
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("Elon Musk");
+  const [inputValue, setinputValue] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("IN");
 
   function handleSearchSubmit(event) {
     event.preventDefault();
-    setSearchValue((prev) => (prev = event.target.value));
+    setSearchValue(inputValue ? inputValue : searchValue);
+  }
+
+  function handlechange(event) {
+    setinputValue(event.target.value);
   }
 
   return (
-    <MyContext.Provider value={{ searchValue, setSearchValue }}>
+    <MyContext.Provider
+      value={{
+        searchValue,
+        setSearchValue,
+        selectedCountry,
+        setSelectedCountry,
+      }}
+    >
       <div>
         <nav className=" bg-yellow-200 relative w-full z-10 p-6 min-h-44 h-max mx-auto flex flex-wrap items-center justify-between">
           {/* Logo and Heading */}
@@ -51,15 +64,45 @@ export default function App() {
               isMobileMenuOpen ? "flex" : "hidden"
             } mobile_buttons md:hidden w-full justify-center gap-4 mt-2 transition-all duration-500 ease-in-out `}
           >
-            <button className="button-56">Home</button>
-            <button className="button-56">Sports</button>
-            <button className="button-56">Technology</button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "All"))}
+              className="button-56"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "Sports"))}
+              className="button-56"
+            >
+              Sports
+            </button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "Technology"))}
+              className="button-56"
+            >
+              Technology
+            </button>
           </div>
 
           <div className="hidden md:flex space-x-4 text-white">
-            <button className="button-56">Home</button>
-            <button className="button-56">Sports</button>
-            <button className="button-56">Technology</button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "All"))}
+              className="button-56"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "Sports"))}
+              className="button-56"
+            >
+              Sports
+            </button>
+            <button
+              onClick={() => setSearchValue((prev) => (prev = "Technology"))}
+              className="button-56"
+            >
+              Technology
+            </button>
           </div>
 
           {/* Search Form */}
@@ -73,6 +116,7 @@ export default function App() {
                 className="searchbar p-2 rounded-l-md focus:shadow-outline text-gray-800 flex-grow mr-2"
                 type="text"
                 placeholder="Search News"
+                onChange={handlechange}
               />
               <button
                 type="button"
