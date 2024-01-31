@@ -12,9 +12,10 @@ export default function App() {
   const [inputValue, setinputValue] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("IN");
 
-  function handleSearchSubmit(event) {
+  function handleSearchSubmit(event, category) {
     event.preventDefault();
-    setSearchValue(inputValue ? inputValue : searchValue);
+    setSearchValue(category);
+    setinputValue(category);
   }
 
   function handlechange(event) {
@@ -65,19 +66,19 @@ export default function App() {
             } mobile_buttons md:hidden w-full justify-center gap-4 mt-2 transition-all duration-500 ease-in-out `}
           >
             <button
-              onClick={() => setSearchValue((prev) => (prev = "All"))}
+              onClick={(e) => handleSearchSubmit(e, "World")}
               className="button-56"
             >
-              Home
+              World
             </button>
             <button
-              onClick={() => setSearchValue((prev) => (prev = "Sports"))}
+              onClick={(e) => handleSearchSubmit(e, "Sports")}
               className="button-56"
             >
               Sports
             </button>
             <button
-              onClick={() => setSearchValue((prev) => (prev = "Technology"))}
+              onClick={(e) => handleSearchSubmit(e, "Technology")}
               className="button-56"
             >
               Technology
@@ -86,19 +87,19 @@ export default function App() {
 
           <div className="hidden md:flex space-x-4 text-white">
             <button
-              onClick={() => setSearchValue((prev) => (prev = "All"))}
+              onClick={(e) => handleSearchSubmit(e, "World")}
               className="button-56"
             >
-              Home
+              World
             </button>
             <button
-              onClick={() => setSearchValue((prev) => (prev = "Sports"))}
+              onClick={(e) => handleSearchSubmit(e, "Sports")}
               className="button-56"
             >
               Sports
             </button>
             <button
-              onClick={() => setSearchValue((prev) => (prev = "Technology"))}
+              onClick={(e) => handleSearchSubmit(e, "Technology")}
               className="button-56"
             >
               Technology
@@ -107,7 +108,7 @@ export default function App() {
 
           {/* Search Form */}
           <form
-            onSubmit={handleSearchSubmit}
+            onSubmit={(e) => handleSearchSubmit(e, inputValue)}
             className="md:flex md:flex-wrap flex flex-wrap justify-center items-center mt-4 mx-auto w-11/12 gap-4"
           >
             <CountryDropdown />
@@ -117,9 +118,10 @@ export default function App() {
                 type="text"
                 placeholder="Search News"
                 onChange={handlechange}
+                value={inputValue}
               />
               <button
-                type="button"
+                type="submit"
                 className="search_call border-black bg-white text-blue-900 px-4 py-2 rounded-r-md transition duration-300 ease-in-out hover:bg-blue-800 hover:text-white"
               >
                 Search
