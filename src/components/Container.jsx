@@ -16,7 +16,7 @@ const Container = React.memo(function Container() {
       url: "https://newsnow.p.rapidapi.com/",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "a40531de73mshf5e68908b7cc208p17df9fjsn868438ac29c7",
+        "X-RapidAPI-Key": "5328498bb2msh1ac2d920339bf1ep10b4c8jsn4ef973c5a23b",
         "X-RapidAPI-Host": "newsnow.p.rapidapi.com",
       },
       data: {
